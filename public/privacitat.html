@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de privacitat · FabAula</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1d2321; background: #f6f7f5; margin: 0; line-height: 1.6; }
+    main { max-width: 760px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    header { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.5rem; }
+    h1 { font-size: 1.6rem; margin: 0; }
+    h2 { font-size: 1.1rem; margin-top: 2rem; }
+    a { color: #1f6f5c; }
+    .muted { color: #66706c; font-size: .9rem; }
+    table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+    td, th { border: 1px solid #e2e6e3; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+    th { background: #fafbfa; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="./icon.svg" alt="" width="40" height="40" />
+    <h1>Política de privacitat de FabAula</h1>
+  </header>
+  <p class="muted">Darrera actualització: 16 de novembre de 2026</p>
+
+  <p>FabAula és una aplicació web per gestionar aules maker i espais de fabricació digital de centres educatius: màquines, usos, manteniment, incidències, préstec de material i consumibles. Aquesta pàgina explica quines dades personals tracta i com.</p>
+
+  <h2>1. Qui és responsable de les dades</h2>
+  <p>Cada centre educatiu que fa servir FabAula és el <strong>responsable del tractament</strong> de les dades del seu personal i de la informació que hi registra.</p>
+  <p>L'equip de FabAula actua com a <strong>encarregat del tractament</strong>: ofereix el servei per compte del centre i no fa servir les dades per a cap altra finalitat.</p>
+  <p>Contacte: <a href="mailto:cimsequip@gmail.com">cimsequip@gmail.com</a>.</p>
+
+  <h2>2. Quines dades tractem</h2>
+  <table>
+    <tr><th>Dada</th><th>D'on surt</th><th>Per a què</th></tr>
+    <tr>
+      <td>Adreça de correu electrònic</td>
+      <td>Compte de Google, o el correu amb què demanes l'enllaç d'accés</td>
+      <td>Identificar-te i comprovar a quin centre pertanys i amb quin rol</td>
+    </tr>
+    <tr>
+      <td>Nom i foto de perfil del compte de Google</td>
+      <td>Google, si entres amb Google</td>
+      <td>Google els envia en iniciar sessió i queden al registre d'usuari del sistema d'autenticació (Supabase Auth); l'aplicació no els mostra ni els fa servir</td>
+    </tr>
+    <tr>
+      <td>Nom i rol dins del centre</td>
+      <td>Els introdueix l'administrador del centre</td>
+      <td>Gestionar permisos (admin, gestor, docent)</td>
+    </tr>
+    <tr>
+      <td>Registres d'activitat: sessions, usos de màquines, préstecs, consum, incidències, manteniment</td>
+      <td>Els introdueixen els usuaris del centre</td>
+      <td>La gestió de l'aula, que és la funció de l'aplicació</td>
+    </tr>
+    <tr>
+      <td>Fotografies i documents adjunts</td>
+      <td>Els pugen els usuaris</td>
+      <td>Documentar màquines, material i incidències</td>
+    </tr>
+  </table>
+  <p>FabAula no tracta dades d'alumnes. No s'hi han d'introduir noms ni fotos d'alumnes.</p>
+
+  <h2>3. Ús de les dades de Google</h2>
+  <p>Si entres amb Google, l'aplicació només demana els permisos bàsics d'identificació (<code>openid</code>, <code>email</code>, <code>profile</code>). No accedeix al teu correu, Drive, calendari ni a cap altre servei de Google.</p>
+  <p>L'ús de la informació rebuda de les API de Google compleix la <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, incloent-hi els requisits d'ús limitat (<em>Limited Use</em>).</p>
+
+  <h2>4. On es guarden</h2>
+  <p>Les dades es guarden a <a href="https://supabase.com">Supabase</a> (base de dades i fitxers), en servidors de la Unió Europea. El web es publica a GitHub Pages, que no rep cap dada personal de l'aplicació.</p>
+  <p>Cada centre només pot veure les seves dades. L'accés està protegit amb regles de seguretat a la mateixa base de dades.</p>
+
+  <h2>5. Amb qui es comparteixen</h2>
+  <p>Amb ningú. No es venen ni es cedeixen dades a tercers, no hi ha publicitat ni analítica de seguiment.</p>
+  <p>Els únics proveïdors que hi intervenen per fer funcionar el servei són:</p>
+  <ul>
+    <li>Supabase (allotjament);</li>
+    <li>Google, només per a l'inici de sessió;</li>
+    <li>si escau, el proveïdor de correu que envia els enllaços d'accés.</li>
+  </ul>
+
+  <h2>6. Quant de temps es conserven</h2>
+  <p>Mentre el centre faci servir el servei. Quan un administrador elimina un usuari, aquest perd l'accés immediatament. Si un centre deixa el servei, les seves dades s'esborren en un termini màxim de 30 dies des que ho sol·liciti.</p>
+
+  <h2>7. Els teus drets</h2>
+  <p>Pots exercir els drets d'accés, rectificació, supressió, oposició, limitació i portabilitat davant del teu centre educatiu, o escrivint a <a href="mailto:cimsequip@gmail.com">cimsequip@gmail.com</a>.</p>
+  <p>També pots presentar una reclamació a l'<a href="https://apdcat.gencat.cat">Autoritat Catalana de Protecció de Dades</a>.</p>
+
+  <h2>8. Galetes</h2>
+  <p>FabAula no fa servir galetes de seguiment. Només guarda al navegador la sessió iniciada i el centre seleccionat (<em>localStorage</em>), imprescindibles perquè l'aplicació funcioni.</p>
+
+  <h2 lang="en">Summary in English</h2>
+  <p lang="en">FabAula is a maker-space management app for schools. It uses Google Sign-In only to obtain the user's email address (scopes <code>openid</code>, <code>email</code>, <code>profile</code>), which identifies the user and the school they belong to. It does not access Gmail, Drive or any other Google service. Data entered by school staff (machine usage, loans, stock, incidents, maintenance, photos) is stored on Supabase servers in the European Union, is visible only to members of the same school, and is never sold, shared with third parties or used for advertising. Use of information received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements. Users can request access, correction or deletion of their data by contacting their school or cimsequip@gmail.com.</p>
+
+  <p class="muted" style="margin-top:3rem"><a href="https://fabaula.github.io/">← FabAula</a></p>
+</main>
+</body>
+</html>
