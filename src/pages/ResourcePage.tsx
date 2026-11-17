@@ -7,7 +7,7 @@ import {
 import { useSchool } from '../lib/school';
 import { useAuth } from '../lib/auth';
 import { supabase, errorMessage } from '../lib/supabase';
-import { fmtDate, fmtTime, nowTime } from '../lib/format';
+import { fmtDate, fmtTime, nowTime, today } from '../lib/format';
 import { useRefs, type RefOptions } from '../components/useRefs';
 import RecordForm from '../components/RecordForm';
 import { ErrorBox, Modal, Photo, Spinner, Status, Thumb, Empty, toast } from '../components/ui';
@@ -86,7 +86,7 @@ function ResourceView({ res }: { res: Resource }) {
       const use = data?.[0];
       if (!use) { toast('No hi ha cap ús obert per a aquesta màquina'); return load(); }
       if (!canEdit(resourceByKey('usos')!, use, role, email)) { toast(`L'està fent servir ${use.user_email}`); return; }
-      setForm({ resource: resourceByKey('usos')!, row: use, preset: { end_time: nowTime(), final_status: 'Correcte' } });
+      setForm({ resource: resourceByKey('usos')!, row: use, preset: { end_time: nowTime(), end_date: today(), final_status: 'Correcte' } });
     } else {
       if (a.confirm && !confirm(a.confirm)) return;
       const { error, count } = await supabase.from(res.table).update(a.values(row), { count: 'exact' }).eq('id', row.id);

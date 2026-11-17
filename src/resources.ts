@@ -33,6 +33,7 @@ export interface Field {
   showIf?: (values: Row) => boolean;
   help?: string;
   defaultMe?: boolean;            // per defecte, el correu de qui omple el formulari
+  module?: string;                // només es mostra si el mòdul està activat
 }
 
 export interface Column {
@@ -118,6 +119,13 @@ const notes: Field = { name: 'notes', label: 'Observacions', type: 'textarea' };
 const active: Field = { name: 'active', label: 'Actiu', type: 'bool', default: () => true, staffOnly: true };
 const photo: Field = { name: 'photo_path', label: 'Fotografia', type: 'photo' };
 const own = (r: Row, c: ActionCtx) => c.isStaff || r.created_by === c.email;
+/** Durada d'un ús en minuts, encara que acabi un altre dia */
+const useMinutes = (r: Row) => {
+  const m = minutesBetween(fmtTime(r.start_time), fmtTime(r.end_time));
+  if (m == null) return null;
+  const days = r.end_date && r.use_date ? Math.round((Date.parse(r.end_date) - Date.parse(r.use_date)) / 86400000) : 0;
+  return m + days * 1440;
+};
 
 // ---------------------------------------------------------------------
 // Pantalles
@@ -255,8 +263,8 @@ export const RESOURCES: Resource[] = [
       { label: 'Data', value: (r) => fmtDate(r.use_date) },
       { label: 'Màquina', value: (r, ref) => ref('machine_id', r.machine_id) },
       { label: 'Qui', value: (r) => r.user_email ?? '', hideOnMobile: true },
-      { label: 'Horari', value: (r) => `${fmtTime(r.start_time)}–${fmtTime(r.end_time) || '…'}` },
-      { label: 'Durada', value: (r) => fmtDuration(minutesBetween(fmtTime(r.start_time), fmtTime(r.end_time))), hideOnMobile: true },
+      { label: 'Horari', value: (r) => `${fmtTime(r.start_time)}–${r.end_date && r.end_date !== r.use_date ? fmtDate(r.end_date) + ' ' : ''}${fmtTime(r.end_time) || '…'}` },
+      { label: 'Durada', value: (r) => fmtDuration(useMinutes(r)), hideOnMobile: true },
       { label: 'Estat', value: (r) => (r.end_time ? r.final_status ?? 'Finalitzat' : 'En curs'),
         tone: (r) => (!r.end_time ? 'info' : r.final_status === 'Incidència' ? 'bad' : r.final_status === 'Necessita revisió' ? 'warn' : 'ok') },
     ],
@@ -266,8 +274,14 @@ export const RESOURCES: Resource[] = [
       { name: 'start_time', label: 'Hora d\'inici', type: 'time', default: nowTime, required: true },
       { name: 'planned_end_time', label: 'Hora prevista de fi', type: 'time' },
       { name: 'end_time', label: 'Hora de fi', type: 'time', help: 'Deixa-ho buit mentre la màquina estigui en ús' },
+      { name: 'end_date', label: 'Data de fi', type: 'date', showIf: (v) => Boolean(v.end_time),
+        help: 'Si l\'ús es va quedar obert d\'un dia per l\'altre, posa el dia que s\'ha acabat' },
       { name: 'project_id', label: 'Projecte', type: 'ref', ref: REF.project },
-      { name: 'material_id', label: 'Material utilitzat', type: 'ref', ref: REF.material },
+      { name: 'consumable_id', label: 'Material utilitzat', type: 'ref', ref: REF.consumable, module: 'consumibles',
+        help: 'Consumible de l\'estoc (filament, fusta, vinil…)' },
+      { name: 'consumable_qty', label: 'Quantitat utilitzada', type: 'number', module: 'consumibles',
+        showIf: (v) => Boolean(v.consumable_id),
+        help: 'En finalitzar l\'ús es descomptarà de l\'estoc automàticament' },
       { name: 'final_status', label: 'Com ha anat?', type: 'select', options: USE_FINAL, showIf: (v) => Boolean(v.end_time),
         help: 'Si marques "Incidència" se\'n crearà una automàticament' },
       { name: 'user_email', label: 'Usuari', type: 'email', staffOnly: true, defaultMe: true },
@@ -275,7 +289,7 @@ export const RESOURCES: Resource[] = [
     ],
     actions: [
       { label: 'Finalitzar', kind: 'edit', show: (r, c) => !r.end_time && own(r, c),
-        preset: () => ({ end_time: nowTime(), final_status: 'Correcte' }) },
+        preset: () => ({ end_time: nowTime(), end_date: today(), final_status: 'Correcte' }) },
     ],
     filters: [{ label: 'En curs', match: (r) => !r.end_time }, { label: 'Avui', match: (r) => r.use_date === today() }],
     search: (r) => `${r.user_email ?? ''} ${r.notes ?? ''}`,

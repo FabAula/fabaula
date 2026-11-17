@@ -24,10 +24,10 @@ function toInput(f: Field, v: unknown) {
 }
 
 export default function RecordForm({ resource, row, preset, refs, onClose, onSaved }: Props) {
-  const { school, isStaff, role, members } = useSchool();
+  const { school, isStaff, role, members, enabled } = useSchool();
   const { email } = useAuth();
   const isNew = !row;
-  const fields = resource.fields.filter((f) => isStaff || !f.staffOnly);
+  const fields = resource.fields.filter((f) => (isStaff || !f.staffOnly) && (!f.module || enabled.has(f.module)));
 
   const initial = useMemo(() => {
     const v: Row = {};
